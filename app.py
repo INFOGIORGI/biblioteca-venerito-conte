@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from flask_mysqldb import MySQL
 import db
 
@@ -18,5 +18,10 @@ def hello():
 @app.route("/user")
 def user():
     return
+
+@app.route("/ricerca/", method = "POST")
+def ricerca():
+    stringa = request.form.get("stringa", "Stringa vuota")
+    return db.ricerca(stringa)
 
 app.run(debug=True)
