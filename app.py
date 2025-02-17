@@ -15,6 +15,7 @@ mysql = MySQL(app)
 def hello():
     return render_template("index.html", message='Ciao mondo!!')
 
+<<<<<<< HEAD
 @app.route("/user")
 def user():
     return
@@ -23,5 +24,15 @@ def user():
 def ricerca():
     stringa = request.form.get("stringa", "Stringa vuota")
     return db.ricerca(stringa)
+=======
+@app.route("/user/")
+def user():
+    return 
+
+@app.route("/ricerca/" methods="POST")
+def ricerca():
+    return db.ricerca()
+
+>>>>>>> 6173b5e (7)
 
 app.run(debug=True)

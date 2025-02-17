@@ -3,14 +3,17 @@
 Biblioteca
 {% endblock %}
 
-{% block intestazione %}Home page{% endblock %}
+{% block intestazione %}Biblioteca{% endblock %}
 {% block corpo %}
 {{ message }}
 <h2><a href="{{url_for('user')}}">Utenti</a></h2>
 
+<<<<<<< HEAD
 <h1>Ricerca libro per parola chiave</h1>
 <form action="/ricerca/" method="post">
     <input type="text" placeholder="Inserisci un titolo" name="stringa">
     <input type="submit" value="Cerca">
 </form>
+=======
+>>>>>>> 6173b5e (7)
 {% endblock %}
