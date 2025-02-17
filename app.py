@@ -15,4 +15,8 @@ mysql = MySQL(app)
 def hello():
     return render_template("index.html", message='Ciao mondo!!')
 
+@app.route("/user")
+def user():
+    return
+
 app.run(debug=True)
