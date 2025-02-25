@@ -6,11 +6,19 @@ Biblioteca
 {% block intestazione %}Biblioteca{% endblock %}
 {% block corpo %}
 {{ message }}
-<h2><a href="{{url_for('user')}}">Utenti</a></h2>
+<h2><a href="{{url_for('addLibro')}}">Aggiungi un Libro</a></h2>
 
 <h1>Ricerca libro per parola chiave</h1>
 <form action="/ricerca/" method="post">
     <input type="text" placeholder="Inserisci un titolo" name="stringa">
     <input type="submit" value="Cerca">
 </form>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h1>{{message}}</h1>
+        {%endfor%}
+    {% endif %}
+{% endwith %}
 {% endblock %}

@@ -4,5 +4,5 @@ from flask_mysqldb import MySQL
 db=Flask(__name__)
 db=MySQL(db)
 
-def ricerca():
+def addLibro():
     return 0
