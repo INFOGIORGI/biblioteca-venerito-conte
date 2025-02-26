@@ -5,13 +5,13 @@
 <form action="/addLibro" method="POST">
     <br>
     <label for="titolo">Titolo</label>
-    <input type="text" placeholder="Titolo" id="titolo" name="titolo"
+    <input type="text" placeholder="Titolo" id="titolo" name="titolo">
     <br><br>
     <label for="isbn">Isbn</label>
     <input type="text" placeholder="Isbn" id="isbn" name="isbn">
     <br><br>
     <label for="autore">Autore</label>
-    <input type="text" placeholder="Autore" id="autore" name="autore>
+    <input type="text" placeholder="Autore" id="autore" name="autore">
     <br><br>
     <label for="categoria">Categoria</label>
     <input type="text" placeholder="Categoria" id="categoria" name="categoria">
@@ -24,4 +24,12 @@
     <br><br><br>
     <input type="submit" value="Aggiungi il libro">
 </form>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h1>{{message}}</h1>
+        {%endfor%}
+    {% endif %}
+{% endwith %}
 {%endblock%}

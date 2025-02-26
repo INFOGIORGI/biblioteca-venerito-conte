@@ -3,11 +3,7 @@ from flask_mysqldb import MySQL
 import db
 
 app = Flask(__name__)
-app.config["MYSQL_HOST"]="138.41.20.102"
-app.config["MYSQL_PORT"]=53306
-app.config["MYSQL_DB"]="venerito_conte"
-app.config["MYSQL_USER"]="5di"
-app.config["MYSQL_PASSWORD"]="colazzo"
+
 mysql = MySQL(app)
 
 app.secret_key = "secret key"
@@ -32,12 +28,14 @@ def addLibro():
     categoria = request.form.get("categoria", "Stringa vuota")
     anno = request.form.get("anno", "Stringa vuota")
     nCopie = request.form.get("nCopie", "Stringa vuota")
+
+    autoreConfronta = db.getAutore()
     
-    if len(autore) > 0 and (titolo != "Stringa vuota" or isbn != "Stringa vuota" or autore != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
+    if autore==autoreConfronta and (titolo != "Stringa vuota" or isbn != "Stringa vuota" or autore != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
         return db.addLibro(titolo, isbn, autore, categoria, anno, nCopie)
     else:
         flash('Autore inesistente o campi non compilati')
-        return redirect(url_for(home))
+        return redirect(url_for(addLibro))
 
 
 app.run(debug=True)
