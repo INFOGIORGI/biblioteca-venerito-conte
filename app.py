@@ -24,18 +24,22 @@ def addLibro():
     
     titolo = request.form.get("titolo", "Stringa vuota")
     isbn = request.form.get("isbn", "Stringa vuota")
-    autore = request.form.get("autore", "Stringa vuota")
+    codA = request.form.get("autore", "Stringa vuota")
     categoria = request.form.get("categoria", "Stringa vuota")
     anno = request.form.get("anno", "Stringa vuota")
     nCopie = request.form.get("nCopie", "Stringa vuota")
 
-    autoreConfronta = db.getAutore()
+    autoreConfronta = db.getAutore(codA)
     
-    if autore==autoreConfronta and (titolo != "Stringa vuota" or isbn != "Stringa vuota" or autore != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
-        return db.addLibro(titolo, isbn, autore, categoria, anno, nCopie)
+    if autoreConfronta == True and (titolo != "Stringa vuota" or isbn != "Stringa vuota" or codA != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
+        ritorno=db.addLibro(titolo,isbn,codA,categoria,anno,nCopie)
     else:
         flash('Autore inesistente o campi non compilati')
-        return redirect(url_for(addLibro))
+        return redirect(url_for('addLibro'))
+    if ritorno==1:
+        flash('libro inserito')
+        return redirect(url_for('home'))
+    
 
 
 app.run(debug=True)
