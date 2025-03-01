@@ -2,11 +2,7 @@ from flask import Flask, render_template, url_for
 from flask_mysqldb import MySQL
 
 db=Flask(__name__)
-db.config["MYSQL_HOST"]="138.41.20.102"
-db.config["MYSQL_PORT"]=53306
-db.config["MYSQL_DB"]="venerito_conte"
-db.config["MYSQL_USER"]="5di"
-db.config["MYSQL_PASSWORD"]="colazzo"
+
 mysql=MySQL(db)
 
 def getAutore(codA):
@@ -28,8 +24,8 @@ def addLibro(titolo,isbn,codA,categoria,anno,ncopie):
     cursor.close()
     if len(tmp)==0:
          cursor = mysql.connection.cursor()
-         query = "INSERT INTO Libri VALUES(%s,%s,%s,%s,%s,%s)"
-         cursor.execute(query, (titolo,isbn, codA,categoria,anno,ncopie))
+         query = "INSERT INTO Libri (isbn, categoria, titolo, codA, anno, copie) VALUES(%s,%s,%s,%s,%s,%s)"
+         cursor.execute(query, (isbn,categoria,titolo,codA,anno,ncopie))
          mysql.connection.commit()
          cursor.close()
          return 1
@@ -42,7 +38,7 @@ def addLibro(titolo,isbn,codA,categoria,anno,ncopie):
     copie=copie+ncopie
     cursor=mysql.connection.cursor()
     query2="ALTER TABLE Libri ALTER COLUMN copie %d"
-    cursor.execute(query,(copie,))
+    cursor.execute(query2,(copie,))
     cursor.close()
     return 1
 
