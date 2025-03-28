@@ -20,7 +20,7 @@ def addLibro(titolo,isbn,codA,categoria,anno,ncopie):
     cursor=mysql.connection.cursor()
     query="SELECT * FROM Libri WHERE isbn=%s"
     cursor.execute(query,(isbn,))
-    tmp=cursor.fetchall()
+    tmp=cursor.fetchone()
     cursor.close()
     if len(tmp)==0:
          cursor = mysql.connection.cursor()
@@ -33,14 +33,26 @@ def addLibro(titolo,isbn,codA,categoria,anno,ncopie):
     cursor=mysql.connection.cursor()
     query="SELECT Copie FROM Libri WHERE isbn=%s"
     cursor.execute(query,(isbn,))
-    copie=cursor.fetchall()
+    tmp=cursor.fetchone()
     cursor.close()
-    copie=copie+ncopie
+    copie = tmp[0]
+
+    copie_attuali=copie+ncopie
     cursor=mysql.connection.cursor()
-    query2="ALTER TABLE Libri ALTER COLUMN copie %d"
-    cursor.execute(query2,(copie,))
+    query2="UPDATE Libri SET copie %d WHERE isbn=%d"
+    cursor.execute(query2,(copie_attuali, isbn))
+    mysql.connection.commit()
     cursor.close()
     return 1
+
+def ricercaLibro(terminiRicerca):
+    cursor=mysql.connection.cursor()
+    query="SELECT * FROM Libri WHERE titolo LIKE %s" #SI PUò FARE ANCHE CATEGORIA
+    cursor.execute(query, ("%" + terminiRicerca + "%",))
+    risultati = cursor.fetchall()
+    cursor.close()
+
+    return render_template("risultatiRicerca.html", libri=risultati, titolo= "Risultati ricerca")
 
 
 

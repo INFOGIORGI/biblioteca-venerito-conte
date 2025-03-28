@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block intestazione %}
+Ricerca Libro per parola Chiave
+{% endblock %}
+
+
+
+{% block corpo %}
+<form action="/ricercaLibro/" method="post">
+    <br>
+    <label for="parolaChiave">Parola Chiave</label>
+    <input type="text" placeholder="Inserisci il titolo per la ricerca" id="parolaChiave" name="terminiRicerca">
+    <br><br>
+    <input type="submit" value="Cerca">
+</form>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h1>{{message}}</h1>
+        {%endfor%}
+    {% endif %}
+{% endwith %}
+{%endblock%}

@@ -16,11 +16,6 @@ app.secret_key = "secret key"
 def home():
     return render_template("index.html", titolo="HOME")
 
-@app.route("/ricerca/", methods = ["POST"])
-def ricerca():
-    stringa = request.form.get("stringa", "Stringa vuota")
-    return db.ricerca(stringa)
-
 @app.route("/addLibro/", methods = ['GET', 'POST'])
 def addLibro():
     if request.method == 'GET':
@@ -31,7 +26,7 @@ def addLibro():
     codA = request.form.get("autore", "Stringa vuota")
     categoria = request.form.get("categoria", "Stringa vuota")
     anno = request.form.get("anno", "Stringa vuota")
-    nCopie = request.form.get("nCopie", "Stringa vuota")
+    nCopie = int(request.form.get("nCopie", "1"))
 
     autoreConfronta = db.getAutore(codA)
     
@@ -43,6 +38,19 @@ def addLibro():
     if ritorno==1:
         flash('libro inserito')
         return redirect(url_for('home'))
+
+@app.route("/ricercaLibro/", methods = ['GET', 'POST'])
+def ricerca():
+    if request.method == 'GET':
+        return render_template("ricercaLibro.html", titolo = "Cerca un Libro")
+    
+    terminiRicerca = request.form.get("terminiRicerca", None)
+
+    if len(terminiRicerca) != 0:
+        return db.ricercaLibro(terminiRicerca)
+
+    flash('Inserisci almeno un carattere per la ricerca')
+    return redirect(url_for('ricerca'))
     
 
 

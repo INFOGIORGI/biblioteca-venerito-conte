@@ -6,7 +6,10 @@ Biblioteca
 {% block intestazione %}Biblioteca{% endblock %}
 {% block corpo %}
 {{ message }}
-<h2><a href="{{url_for('addLibro')}}">Aggiungi un Libro</a></h2>
+<h2>
+    <a href="{{url_for('addLibro')}}">Aggiungi un Libro</a>
+    <a href="{{url_for('ricerca')}}">Cerca un Libro</a>
+</h2>
 
 <h1>Ricerca libro per parola chiave</h1>
 <form action="/ricerca/" method="post">
