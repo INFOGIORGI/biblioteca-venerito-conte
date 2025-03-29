@@ -58,10 +58,19 @@ def lista():
 
 @app.route('/ordinaPerAutore/')
 def ordinaAutore():
-    return 
+    return db.ordinaPerAutore()
 
 @app.route('/ordinaPerTitolo/')
 def ordinaTitolo():
-    return 0
+    return db.ordinaPerTitolo()
+
+@app.route('/filtraPerGenere/', methods = ["POST"])
+def filtraGenere():
+    genere = request.form.get("genere")
+    return db.filtraGenere(genere)
+
+@app.route('/statisticheGenere/', methods = ["POST"])
+def statisticheGenere():
+    return db.statisticheGenere()
 
 app.run(debug=True)

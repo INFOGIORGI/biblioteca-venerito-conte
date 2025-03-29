@@ -31,18 +31,6 @@ Lista dei Libri
 <form action="/ordinaPerTitolo/">
     <input type="submit" value="Ordina per Titolo">
 </form>
-<br>
-<form action="/filtraPerGenere/" method = "post">
-    <label for="genere">Genere</label>
-    <input type="text" id="genere" name="genere", placeholder="Inserisci il genere da cercare">
-    <br>
-    <input type="submit" value="Filtra">
-</form>
-
-<br>
-<form action="/statisticheGenere/" method= "post">
-    <input type="submit" value="Ottieni le statistiche per la ricerca di genere">
-</form>
 
 
 
@@ -60,7 +48,7 @@ Lista dei Libri
             <td>{{libro[0]}}</td>
                 <td>{{libro[1]}}</td>
                 <td>{{libro[2]}}</td>
-                <td>{{autori.get(libro[0]) }}</td>
+                <td>{{libro[3]}}</td>
                 <td>{{libro[4]}}</td>
                 <td>{{libro[5]}}</td>
         </tr>

@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS Utenti;
 DROP TABLE IF EXISTS LibriPerAutore;
 DROP TABLE IF EXISTS Libri;
 DROP TABLE IF EXISTS Autori;
+DROP TABLE IF EXISTS RicercheCategoria;
+
 
 CREATE TABLE IF NOT EXISTS Autori(
     codA varchar(20) PRIMARY KEY,
@@ -13,10 +15,16 @@ CREATE TABLE IF NOT EXISTS Autori(
 );
 
 
+CREATE TABLE IF NOT EXISTS RicercheCategoria (
+    categoria varchar(20) PRIMARY KEY,
+    nRicerche int
+);
+
+
 CREATE TABLE IF NOT EXISTS Libri(
     isbn char(13) PRIMARY KEY,
     categoria varchar(20),
-    titolo varchar(20),
+    titolo varchar(50),
     codA varchar(20),
     anno int(255),
     copie int(255),
@@ -49,6 +57,8 @@ CREATE TABLE IF NOT EXISTS Prestiti(
     FOREIGN KEY(isbn) REFERENCES Libri(isbn),
     CHECK(dataRestituizione > dataPrestito)
 );
+
+
 
 INSERT INTO Autori (codA, nome, cognome, dataNascita, dataMorte)
 VALUES
