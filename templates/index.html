@@ -9,13 +9,11 @@ Biblioteca
 <h2>
     <a href="{{url_for('addLibro')}}">Aggiungi un Libro</a>
     <a href="{{url_for('ricerca')}}">Cerca un Libro</a>
+    <a href="{{url_for('lista')}}">Tutti i libri</a>
+
 </h2>
 
-<h1>Ricerca libro per parola chiave</h1>
-<form action="/ricerca/" method="post">
-    <input type="text" placeholder="Inserisci un titolo" name="stringa">
-    <input type="submit" value="Cerca">
-</form>
+
 
 {% with messages = get_flashed_messages() %}
     {% if messages %}

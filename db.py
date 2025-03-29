@@ -52,7 +52,46 @@ def ricercaLibro(terminiRicerca):
     risultati = cursor.fetchall()
     cursor.close()
 
-    return render_template("risultatiRicerca.html", libri=risultati, titolo= "Risultati ricerca")
+    autoriR={}
+    for libro in risultati:
+        codA = libro[3]
+
+        cursor=mysql.connection.cursor()
+        query="SELECT Nome, Cognome FROM Autori WHERE codA = %s"
+        cursor.execute(query, (codA, ))
+        autore=cursor.fetchall()
+        cursor.close()
+
+        if len(autore)>0:
+            autoriR.update({libro[0] : " ".join(autore[0])}) #il dizionario associa l'isbn all'autore, JOIN unisce tutti gli elementi di una tupla in una stringa usando il carattere specificato come separatore
+        else:
+            autoriR.update({libro[0] : "Sconosciuto"})
+    
+    return render_template("risultatiRicerca.html", libri=risultati, titolo= "Risultati ricerca", autori=autoriR)
+
+def lista():
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM Libri"
+    cursor.execute(query,)
+    libri = cursor.fetchall()
+    cursor.close()
+
+    autoriR={}
+    for libro in libri:
+        codA = libro[3]
+
+        cursor=mysql.connection.cursor()
+        query="SELECT Nome, Cognome FROM Autori WHERE codA = %s"
+        cursor.execute(query, (codA, ))
+        autore=cursor.fetchall()
+        cursor.close()
+
+        if len(autore)>0:
+            autoriR.update({libro[0] : " ".join(autore[0])}) #il dizionario associa l'isbn all'autore, JOIN unisce tutti gli elementi di una tupla in una stringa usando il carattere specificato come separatore
+        else:
+            autoriR.update({libro[0] : "Sconosciuto"})
+
+    return render_template("listaLibri.html", libri=libri, titolo="Tutti i libri", autori=autoriR)
 
 
 

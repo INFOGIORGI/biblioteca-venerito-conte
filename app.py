@@ -44,14 +44,24 @@ def ricerca():
     if request.method == 'GET':
         return render_template("ricercaLibro.html", titolo = "Cerca un Libro")
     
-    terminiRicerca = request.form.get("terminiRicerca", None)
+    terminiRicerca = request.form.get("terminiRicerca")
 
-    if len(terminiRicerca) != 0:
+    if len(terminiRicerca) != None:
         return db.ricercaLibro(terminiRicerca)
 
     flash('Inserisci almeno un carattere per la ricerca')
     return redirect(url_for('ricerca'))
     
+@app.route('/listaLibri/')
+def lista():
+    return db.lista()
 
+@app.route('/ordinaPerAutore/')
+def ordinaAutore():
+    return 
+
+@app.route('/ordinaPerTitolo/')
+def ordinaTitolo():
+    return 0
 
 app.run(debug=True)
