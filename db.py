@@ -1,9 +1,10 @@
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, session
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash,check_password_hash
-
+from datetime import datetime
 
 db=Flask(__name__)
+db.secret_key = "MY_SECRET_KEY"
 
 mysql=MySQL(db)
 
@@ -143,24 +144,25 @@ def statisticheGenere():
     cursor.close()
     return render_template("statistiche.html", titolo = "Statistiche sulle ricerche", statistiche = risultati)
 
-def register(nome, cognome, username, password, confermapassword):
+def register(nome, cognome, username, password, confermapassword, email):
     if (nome=="" or cognome=="" or username=="" or password=="" or confermapassword==""):
         flash("Compila tutti i campi prima di continuare")
         return redirect(url_for('register'))
-    else:
-        if confermapassword != password:
-            flash("le password non corrispondono")
-            return redirect(url_for('register'))
+    
+    if confermapassword != password:
+        flash("le password non corrispondono")
+        return redirect(url_for('register'))
+    
     cursor=mysql.connection.cursor()
-    query_select="SELECT * FROM users WHERE username=%s"
+    query_select="SELECT * FROM Utenti WHERE username=%s"
     cursor.execute(query_select,(username,))
     tmp=cursor.fetchall()
     if len(tmp)>0:
         flash("utente già esistente")
         return redirect(url_for('register'))
 
-    query="INSERT INTO users VALUES(%s,%s,%s,%s)"
-    cursor.execute(query,(username,generate_password_hash(password),nome,cognome))
+    query="INSERT INTO Utenti VALUES(%s,%s,%s,%s,%s)"
+    cursor.execute(query,(username,nome,cognome,email,generate_password_hash(password)))
     mysql.connection.commit()
     cursor.close()
     flash("utente registrato correttamente")
@@ -168,18 +170,59 @@ def register(nome, cognome, username, password, confermapassword):
     
 def login(username, password):
     cursor=mysql.connection.cursor()
-    query="SELECT password FROM users WHERE username=%s"
+    query="SELECT password FROM Utenti WHERE username=%s"
     cursor.execute(query,(username,))
     tmp=cursor.fetchall()
+    cursor.close()
 
     if len(tmp)==0:
         flash("utente o password errata")
         return redirect(url_for('login'))
-    else:
-        passwordconfronta=tmp[0][0]
-        if check_password_hash(passwordconfronta,password)==True:
-            return redirect(url_for('personale'))
-        else:
-            flash("errore")
-            return redirect(url_for('login'))
+    
+    passwordconfronta=tmp[0][0]
+    if check_password_hash(passwordconfronta,password)==True:
+        session['user_id'] = username
+        session['greet'] = f"Login effettuato con successo - {session['user_id']}."
+        if username == "admin":
+            return redirect(url_for("sessionAdmin"))
+        return redirect(url_for("session"))
+
+    flash("errore")
+    return redirect(url_for('login'))
+    
+def logout():
+    session.pop('user_id')
+    session['notify'] = "Logout effettuato con successo"
+    return redirect(url_for("home"))
+
+def prestito(titolo, dataFine):
+    if dataFine < datetime.now():
+        flash("Inserisci una data valida")
+        return redirect(url_for('prestito'))
+    
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM Libri WHERE titolo = %s"
+    cursor.execute(query, (titolo,))
+    libro = cursor.fetchone()
+    cursor.close
+
+    username = session.get('user_id')
+    if 'user_id' not in session:
+        flash("Devi effettuare il login per richiedere un prestito")
+        return redirect(url_for('login'))
+    
+    if len(libro) > 0:
+        data_inizio = datetime.now().strftime('%Y-%m-%d ')
+        data_fine = dataFine.strftime('%Y-%m-%d')
+        cursor = mysql.connection.cursor()
+        query = "INSERT INTO Prestiti VALUES(%s,%s,%s,%s)"
+        cursor.execute(query, (username, libro[0], data_inizio, data_fine))
+        mysql.connection.commit()
+        cursor.close()
+
+        flash("Prestito inserito correttamente")
+        return redirect(url_for('session'))
+    
+    flash("Libro non disponibile")
+    return redirect(url_for('session'))
     

@@ -1,15 +1,15 @@
 {%extends 'base.html'%}
 
-{%block navbar%}
-<a href="{{url_for('home')}}">REGISTRATI</a>
-<a href="{{url_for('login')}}">LOGIN</a>
+{%block nav%}
+<a href="{{url_for('login')}}">Login</a>
 {%endblock%}
 
-{%block contenutopagina%}
+{%block corpo%}
 <form action="/register/", method="POST">
     <input type="text" placeholder="nome" name="nome">
     <input type="text" placeholder="cognome" name="cognome">
     <input type="text" placeholder="username" name="username">
+    <input type="email" placeholder="email" name="email">
     <input type="password" placeholder="password" name="password">
     <input type="password" placeholder="confermapassword" name="confermapassword">
     <input type="submit" value="REGISTRATI">

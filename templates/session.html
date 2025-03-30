@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block titolo %}
+Profilo
+{% endblock %}
+
+{%block nav%}
+<a href="{{url_for('logout')}}">Logout</a>
+<a href="{{url_for('prestito')}}">Richiedi un prestito</a>
+{%endblock%}
+
+{% block intestazione %}Il tuo profilo{% endblock %}
+{% block corpo %}
+
+{% endblock %}

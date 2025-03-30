@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{% block intestazione %}Richiedi un Libro{% endblock %}
+
+{%block corpo%}
+<form action="/prestito/" method="post">
+    <label for="titolo">Titolo</label>
+    <input type="text" id="titolo" name="titolo">
+    <label for="dataFine">Data di restituzione</label>
+    <input type="date" id="dataFine" name="dataFine">
+    <br><br>
+    <input type="submit" value="Chiedi il prestito">
+</form>
+{%endblock%}

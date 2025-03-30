@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, request, flash, redirect
 from flask_mysqldb import MySQL
 import db
+from datetime import datetime
+
 
 app = Flask(__name__)
 app.config["MYSQL_HOST"]="138.41.20.102"
@@ -84,8 +86,9 @@ def register():
     username=request.form.get("username","")
     password=request.form.get("password","")
     confermapassword=request.form.get("confermapassword","")
+    email = request.form.get("email")
 
-    return db.register(nome, cognome, username, password, confermapassword)
+    return db.register(nome, cognome, username, password, confermapassword, email)
     
 @app.route("/login/", methods=["GET","POST"])
 def login():
@@ -97,5 +100,24 @@ def login():
 
     return db.login(username, password)
     
+@app.route("/logout/")
+def logout():
+    return db.logout()
 
+@app.route("/prestito/", methods = ["GET", "POST"])
+def prestito():
+    if request.method == 'GET':
+        return render_template("prestito.html", titolo="Richiedi un prestito")
+    
+    titolo = request.form.get("titolo")
+    dataFine = datetime.strptime(request.form.get("dataFine"), "%Y-%m-%d")
+    return db.prestito(titolo, dataFine)
+
+@app.route("/session/")
+def session():
+    return render_template("session.html", titolo="sessione personale")
+
+@app.route("/sessionAdmin/")
+def sessionAdmin():
+    return render_template("sessionAdmin.html", titolo="gestione biblioteca")
 app.run(debug=True)

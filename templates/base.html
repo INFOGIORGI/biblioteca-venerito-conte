@@ -10,11 +10,11 @@
   <div class="container">
     <nav class="navbar">
       <a href="{{url_for('home')}}">HOME</a>
-      <a href="{{url_for('addLibro')}}">Aggiungi un Libro</a>
       <a href="{{url_for('ricerca')}}">Cerca un Libro</a>
       <a href="{{url_for('lista')}}">Tutti i libri</a>
       <a href="{{url_for('login')}}">Login</a>
       <a href="{{url_for('register')}}">Registrati</a>
+      {%block nav%}{%endblock%}
     </nav>
     
     <h1>{% block intestazione %}{% endblock %}</h1>

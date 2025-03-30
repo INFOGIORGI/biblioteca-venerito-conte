@@ -1,10 +1,8 @@
 {%extends 'base.html'%}
 
-{%block navbar%}
-<a href="{{url_for('personale')}}">LOGIN</a>
-{%endblock%}
 
-{%block contenutopagina%}
+
+{%block corpo%}
 <form action="/login/", method="POST">
     <input type="text" placeholder="username" name="username">
     <input type="password" placeholder="password" name="password">
