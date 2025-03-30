@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+
+{%block navbar%}
+<a href="{{url_for('home')}}">REGISTRATI</a>
+<a href="{{url_for('login')}}">LOGIN</a>
+{%endblock%}
+
+{%block contenutopagina%}
+<form action="/register/", method="POST">
+    <input type="text" placeholder="nome" name="nome">
+    <input type="text" placeholder="cognome" name="cognome">
+    <input type="text" placeholder="username" name="username">
+    <input type="password" placeholder="password" name="password">
+    <input type="password" placeholder="confermapassword" name="confermapassword">
+    <input type="submit" value="REGISTRATI">
+</form>
+
+{%with message=get_flashed_messages()%} 
+{%if message%}
+{%for i in message%}
+<h1>{{i}}</h1>
+{%endfor%}
+{%endif%}
+{%endwith%}
+
+{%endblock%}

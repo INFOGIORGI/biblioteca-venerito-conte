@@ -26,12 +26,13 @@ def addLibro():
     codA = request.form.get("autore", "Stringa vuota")
     categoria = request.form.get("categoria", "Stringa vuota")
     anno = request.form.get("anno", "Stringa vuota")
-    nCopie = int(request.form.get("nCopie", "1"))
+    nCopie = request.form.get("nCopie", "1")
+    riassunto = request.form.get("riassunto", "Riassunto inesistente")
 
     autoreConfronta = db.getAutore(codA)
     
-    if autoreConfronta == True and (titolo != "Stringa vuota" or isbn != "Stringa vuota" or codA != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
-        ritorno=db.addLibro(titolo,isbn,codA,categoria,anno,nCopie)
+    if autoreConfronta == True and (isbn != "Stringa vuota" or codA != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
+        ritorno=db.addLibro(titolo,isbn,codA,categoria,anno,nCopie, riassunto)
     else:
         flash('Autore inesistente o campi non compilati')
         return redirect(url_for('addLibro'))
@@ -73,5 +74,28 @@ def filtraGenere():
 def statisticheGenere():
     return db.statisticheGenere()
 
+@app.route("/register/",methods=["GET","POST"])
+def register():
+    if request.method=="GET":
+        return render_template("register.html",titolo='registrazione')
+    
+    nome=request.form.get("nome","")
+    cognome=request.form.get("cognome","")
+    username=request.form.get("username","")
+    password=request.form.get("password","")
+    confermapassword=request.form.get("confermapassword","")
+
+    return db.register(nome, cognome, username, password, confermapassword)
+    
+@app.route("/login/", methods=["GET","POST"])
+def login():
+    if request.method=="GET":
+        return render_template("login.html",titolo='login')
+    
+    username=request.form.get("username")
+    password=request.form.get("password")
+
+    return db.login(username, password)
+    
 
 app.run(debug=True)

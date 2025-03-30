@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+
+{%block navbar%}
+<a href="{{url_for('personale')}}">LOGIN</a>
+{%endblock%}
+
+{%block contenutopagina%}
+<form action="/login/", method="POST">
+    <input type="text" placeholder="username" name="username">
+    <input type="password" placeholder="password" name="password">
+    <input type="submit" value="LOGIN">
+</form>
+
+{%with message=get_flashed_messages()%} 
+{%if message%}
+{%for i in message%}
+<h1>{{i}}</h1>
+{%endfor%}
+{%endif%}
+{%endwith%}
+
+{%endblock%}

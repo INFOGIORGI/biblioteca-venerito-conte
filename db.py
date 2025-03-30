@@ -1,5 +1,7 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
 from flask_mysqldb import MySQL
+from werkzeug.security import generate_password_hash,check_password_hash
+
 
 db=Flask(__name__)
 
@@ -16,34 +18,20 @@ def getAutore(codA):
     else:
         return False
 
-def addLibro(titolo,isbn,codA,categoria,anno,ncopie):
+def addLibro(titolo,isbn,codA,categoria,anno,ncopie, riassunto):
     cursor=mysql.connection.cursor()
     query="SELECT * FROM Libri WHERE isbn=%s"
     cursor.execute(query,(isbn,))
     tmp=cursor.fetchone()
     cursor.close()
-    if tmp!=0:
-         cursor = mysql.connection.cursor()
-         query = "INSERT INTO Libri (isbn, categoria, titolo, codA, anno, copie) VALUES(%s,%s,%s,%s,%s,%s)"
-         cursor.execute(query, (isbn,categoria,titolo,codA,anno,ncopie))
-         mysql.connection.commit()
-         cursor.close()
-         return 1
-
-    cursor=mysql.connection.cursor()
-    query="SELECT Copie FROM Libri WHERE isbn=%s"
-    cursor.execute(query,(isbn,))
-    tmp=cursor.fetchone()
-    cursor.close()
-    copie = tmp[0]
-
-    copie_attuali=copie+ncopie
-    cursor=mysql.connection.cursor()
-    query2="UPDATE Libri SET copie %d WHERE isbn=%d"
-    cursor.execute(query2,(copie_attuali, isbn))
+    
+    cursor = mysql.connection.cursor()
+    query = "INSERT INTO Libri (isbn, categoria, titolo, codA, anno, copie, riassunto) VALUES(%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE copie = copie+%s" #inserisce il libro se questo non esiste altrimenti aggiorna le copie
+    cursor.execute(query, (isbn,categoria,titolo,codA,anno,ncopie,riassunto, ncopie))
     mysql.connection.commit()
     cursor.close()
     return 1
+
 
 def ricercaLibro(terminiRicerca):
     cursor=mysql.connection.cursor()
@@ -155,5 +143,43 @@ def statisticheGenere():
     cursor.close()
     return render_template("statistiche.html", titolo = "Statistiche sulle ricerche", statistiche = risultati)
 
-        
+def register(nome, cognome, username, password, confermapassword):
+    if (nome=="" or cognome=="" or username=="" or password=="" or confermapassword==""):
+        flash("Compila tutti i campi prima di continuare")
+        return redirect(url_for('register'))
+    else:
+        if confermapassword != password:
+            flash("le password non corrispondono")
+            return redirect(url_for('register'))
+    cursor=mysql.connection.cursor()
+    query_select="SELECT * FROM users WHERE username=%s"
+    cursor.execute(query_select,(username,))
+    tmp=cursor.fetchall()
+    if len(tmp)>0:
+        flash("utente già esistente")
+        return redirect(url_for('register'))
+
+    query="INSERT INTO users VALUES(%s,%s,%s,%s)"
+    cursor.execute(query,(username,generate_password_hash(password),nome,cognome))
+    mysql.connection.commit()
+    cursor.close()
+    flash("utente registrato correttamente")
+    return redirect(url_for('register'))
+    
+def login(username, password):
+    cursor=mysql.connection.cursor()
+    query="SELECT password FROM users WHERE username=%s"
+    cursor.execute(query,(username,))
+    tmp=cursor.fetchall()
+
+    if len(tmp)==0:
+        flash("utente o password errata")
+        return redirect(url_for('login'))
+    else:
+        passwordconfronta=tmp[0][0]
+        if check_password_hash(passwordconfronta,password)==True:
+            return redirect(url_for('personale'))
+        else:
+            flash("errore")
+            return redirect(url_for('login'))
     

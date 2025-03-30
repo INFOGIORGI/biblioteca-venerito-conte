@@ -5,61 +5,55 @@ DROP TABLE IF EXISTS Libri;
 DROP TABLE IF EXISTS Autori;
 DROP TABLE IF EXISTS RicercheCategoria;
 
-
 CREATE TABLE IF NOT EXISTS Autori(
-    codA varchar(20) PRIMARY KEY,
-    nome varchar(20),
-    cognome varchar(20),
-    dataNascita date,
-    dataMorte date
+    codA VARCHAR(20) PRIMARY KEY,
+    nome VARCHAR(50),
+    cognome VARCHAR(50),
+    dataNascita DATE,
+    dataMorte DATE
 );
-
 
 CREATE TABLE IF NOT EXISTS RicercheCategoria (
-    categoria varchar(20) PRIMARY KEY,
-    nRicerche int
+    categoria VARCHAR(50) PRIMARY KEY,
+    nRicerche INT DEFAULT 0
 );
-
 
 CREATE TABLE IF NOT EXISTS Libri(
-    isbn char(13) PRIMARY KEY,
-    categoria varchar(20),
-    titolo varchar(50),
-    codA varchar(20),
-    anno int(255),
-    copie int(255),
-    riassunto varchar(2000),
-    FOREIGN KEY(codA) REFERENCES Autori(codA)
+    isbn CHAR(13) PRIMARY KEY,
+    categoria VARCHAR(50),
+    titolo VARCHAR(100),
+    codA VARCHAR(20) NOT NULL,
+    anno INT,
+    copie INT DEFAULT 1,
+    riassunto VARCHAR(100),
+    FOREIGN KEY (codA) REFERENCES Autori(codA)
 );
 
-
 CREATE TABLE IF NOT EXISTS LibriPerAutore(
-    isbn char(13),
-    codA varchar(20),
-    PRIMARY KEY(isbn, codA),
-    FOREIGN KEY(isbn) REFERENCES Libri(isbn),
-    FOREIGN KEY(codA) REFERENCES Autori(codA)
+    isbn CHAR(13),
+    codA VARCHAR(20),
+    PRIMARY KEY (isbn, codA),
+    FOREIGN KEY (isbn) REFERENCES Libri(isbn),
+    FOREIGN KEY (codA) REFERENCES Autori(codA)
 );
 
 CREATE TABLE IF NOT EXISTS Utenti(
-    username varchar(20) PRIMARY KEY,
-    nome varchar(20),
-    cognome varchar(20),
-    email varchar(20)
+    username VARCHAR(50) PRIMARY KEY,
+    nome VARCHAR(50),
+    cognome VARCHAR(50),
+    email VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Prestiti(
-    username varchar(20),
-    isbn char(13),
-    dataPrestito date,
-    dataRestituizione date,
-    PRIMARY KEY(username, isbn, dataPrestito),
-    FOREIGN KEY(username) REFERENCES Utenti(username),
-    FOREIGN KEY(isbn) REFERENCES Libri(isbn),
-    CHECK(dataRestituizione > dataPrestito)
+    username VARCHAR(50),
+    isbn CHAR(13),
+    dataPrestito DATE,
+    dataRestituzione DATE,
+    PRIMARY KEY (username, isbn, dataPrestito),
+    FOREIGN KEY (username) REFERENCES Utenti(username),
+    FOREIGN KEY (isbn) REFERENCES Libri(isbn),
+    CHECK (dataRestituzione > dataPrestito)
 );
-
-
 
 INSERT INTO Autori (codA, nome, cognome, dataNascita, dataMorte)
 VALUES
@@ -74,18 +68,18 @@ VALUES
     ('A009', 'Ernest', 'Hemingway', '1899-07-21', '1961-07-02'),
     ('A010', 'Franz', 'Kafka', '1883-07-03', '1924-06-03');
 
-INSERT INTO Libri (isbn, categoria, titolo, codA, anno, copie)
-VALUES
-    ('9788806200501', 'Narrativa', 'I Malavoglia', 'A001', 1881, 10),
-    ('9788806220531', 'Drammatico', 'Sei personaggi in cerca d’autore', 'A002', 1921, 8),
-    ('9788806240423', 'Fantascienza', 'Le città invisibili', 'A003', 1972, 12),
-    ('9788806200518', 'Narrativa', 'I Promessi Sposi', 'A004', 1827, 15),
-    ('9788806200525', 'Poesia', 'Divina Commedia', 'A005', 1320, 5),
-    ('9788806230604', 'Romanzo', 'Guerra e Pace', 'A006', 1869, 7),
-    ('9788806230611', 'Romanzo', 'Delitto e Castigo', 'A007', 1866, 10),
-    ('9788806230628', 'Narrativa', 'Mrs. Dalloway', 'A008', 1925, 9),
-    ('9788806230635', 'Romanzo', 'Il vecchio e il mare', 'A009', 1952, 6),
-    ('9788806230642', 'Narrativa', 'La Metamorfosi', 'A010', 1915, 11);
+INSERT INTO Libri (isbn, categoria, titolo, codA, anno, copie, riassunto) 
+VALUES 
+    ('9788806200501', 'Narrativa', 'I Malavoglia', 'A001', 1881, 10, 'La storia di una famiglia di pescatori siciliani e delle loro difficoltà.'),
+    ('9788806220531', 'Drammatico', 'Sei personaggi in cerca d’autore', 'A002', 1921, 8, 'Un dramma teatrale in cui i personaggi cercano il loro autore.'),
+    ('9788806240423', 'Fantascienza', 'Le città invisibili', 'A003', 1972, 12, 'Un viaggio immaginario attraverso città fantastiche raccontato da Marco Polo.'),
+    ('9788806200518', 'Narrativa', 'I Promessi Sposi', 'A004', 1827, 15, 'La travagliata storia d’amore tra Renzo e Lucia nella Lombardia del XVII secolo.'),
+    ('9788806200525', 'Poesia', 'Divina Commedia', 'A005', 1320, 5, 'Il viaggio ultraterreno di Dante tra Inferno, Purgatorio e Paradiso.'),
+    ('9788806230604', 'Romanzo', 'Guerra e Pace', 'A006', 1869, 7, 'Un affresco storico e filosofico sulle guerre napoleoniche in Russia.'),
+    ('9788806230611', 'Romanzo', 'Delitto e Castigo', 'A007', 1866, 10, 'Un giovane studente compie un omicidio e affronta le conseguenze morali.'),
+    ('9788806230628', 'Narrativa', 'Mrs. Dalloway', 'A008', 1925, 9, 'Un romanzo sulla vita interiore di una donna nell’arco di una sola giornata.'),
+    ('9788806230635', 'Romanzo', 'Il vecchio e il mare', 'A009', 1952, 6, 'La lotta di un vecchio pescatore cubano contro un enorme marlin.'),
+    ('9788806230642', 'Narrativa', 'La Metamorfosi', 'A010', 1915, 11, 'La storia surreale di Gregor Samsa, che si sveglia trasformato in un insetto.');
 
 INSERT INTO LibriPerAutore (isbn, codA)
 VALUES
@@ -99,5 +93,3 @@ VALUES
     ('9788806230628', 'A008'),
     ('9788806230635', 'A009'),
     ('9788806230642', 'A010');
-
-COMMIT;
