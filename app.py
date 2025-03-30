@@ -73,4 +73,5 @@ def filtraGenere():
 def statisticheGenere():
     return db.statisticheGenere()
 
+
 app.run(debug=True)

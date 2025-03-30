@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS Libri(
     codA varchar(20),
     anno int(255),
     copie int(255),
+    riassunto varchar(2000),
     FOREIGN KEY(codA) REFERENCES Autori(codA)
 );
 

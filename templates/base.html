@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="UTF-8">
   <title>{{titolo}}</title>
   {% block stile %}{% endblock %}
 </head>
 <body>
-  
-  <h1>{% block intestazione %}{% endblock %}</h1>
-  <p>{% block corpo %}{% endblock %}</p>
+
+  <div class="container">
+    <nav class="navbar">
+      <a href="{{url_for('home')}}">HOME</a>
+      <a href="{{url_for('addLibro')}}">Aggiungi un Libro</a>
+      <a href="{{url_for('ricerca')}}">Cerca un Libro</a>
+      <a href="{{url_for('lista')}}">Tutti i libri</a>
+    </nav>
+    
+    <h1>{% block intestazione %}{% endblock %}</h1>
+    <p>{% block corpo %}{% endblock %}</p>
+  </div>
   
 </body>
 

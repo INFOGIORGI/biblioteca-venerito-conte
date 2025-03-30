@@ -141,13 +141,19 @@ def filtraGenere(genere):
     cursor = mysql.connection.cursor()
     query = "INSERT INTO RicercheCategoria VALUES (%s, 1) ON DUPLICATE KEY UPDATE nRicerche = nRicerche+1"
     cursor.execute(query, (genere,))
-    mysql.connection.cursor()
     mysql.connection.commit()
     cursor.close()
-        
-def statisticheGenere():
-    return
 
     return render_template("libriPerTitolo.html", libri = libri, titolo = "Libri " + genere)
+
+        
+def statisticheGenere():
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM RicercheCategoria"
+    cursor.execute(query)
+    risultati = cursor.fetchall()
+    cursor.close()
+    return render_template("statistiche.html", titolo = "Statistiche sulle ricerche", statistiche = risultati)
+
         
     
