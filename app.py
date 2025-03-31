@@ -36,10 +36,10 @@ def addLibro():
     if autoreConfronta == True and (isbn != "Stringa vuota" or codA != "Stringa vuota" or categoria != "Stringa vuota" or anno != "Stringa vuota" or nCopie != "Stringa vuota"):
         ritorno=db.addLibro(titolo,isbn,codA,categoria,anno,nCopie, riassunto)
     else:
-        flash('Autore inesistente o campi non compilati')
+        flash('Autore inesistente o campi non compilati', "error")
         return redirect(url_for('addLibro'))
     if ritorno==1:
-        flash('libro inserito')
+        flash('libro inserito', "success")
         return redirect(url_for('home'))
 
 @app.route("/ricercaLibro/", methods = ['GET', 'POST'])
@@ -52,7 +52,7 @@ def ricerca():
     if len(terminiRicerca) != None:
         return db.ricercaLibro(terminiRicerca)
 
-    flash('Inserisci almeno un carattere per la ricerca')
+    flash('Inserisci almeno un carattere per la ricerca', "error")
     return redirect(url_for('ricerca'))
     
 @app.route('/listaLibri/')

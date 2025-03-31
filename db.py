@@ -146,11 +146,11 @@ def statisticheGenere():
 
 def register(nome, cognome, username, password, confermapassword, email):
     if (nome=="" or cognome=="" or username=="" or password=="" or confermapassword==""):
-        flash("Compila tutti i campi prima di continuare")
+        flash("Compila tutti i campi prima di continuare", "error")
         return redirect(url_for('register'))
     
     if confermapassword != password:
-        flash("le password non corrispondono")
+        flash("Le password non corrispondono", "error") 
         return redirect(url_for('register'))
     
     cursor=mysql.connection.cursor()
@@ -158,14 +158,14 @@ def register(nome, cognome, username, password, confermapassword, email):
     cursor.execute(query_select,(username,))
     tmp=cursor.fetchall()
     if len(tmp)>0:
-        flash("utente già esistente")
+        flash("Utente già esistente", "error")
         return redirect(url_for('register'))
 
     query="INSERT INTO Utenti VALUES(%s,%s,%s,%s,%s)"
     cursor.execute(query,(username,nome,cognome,email,generate_password_hash(password)))
     mysql.connection.commit()
     cursor.close()
-    flash("utente registrato correttamente")
+    flash("Utente registrato correttamente", "success")
     return redirect(url_for('register'))
     
 def login(username, password):
@@ -176,7 +176,7 @@ def login(username, password):
     cursor.close()
 
     if len(tmp)==0:
-        flash("utente o password errata")
+        flash("Utente o password errata", "error")
         return redirect(url_for('login'))
     
     passwordconfronta=tmp[0][0]
@@ -184,10 +184,11 @@ def login(username, password):
         session['user_id'] = username
         session['greet'] = f"Login effettuato con successo - {session['user_id']}."
         if username == "admin":
+            flash("Accesso eseguito correttamente", "success")
             return redirect(url_for("sessionAdmin"))
         return redirect(url_for("session"))
 
-    flash("errore")
+    flash("errore", "error")
     return redirect(url_for('login'))
     
 def logout():
@@ -197,7 +198,7 @@ def logout():
 
 def prestito(titolo, dataFine):
     if dataFine < datetime.now():
-        flash("Inserisci una data valida")
+        flash("Inserisci una data valida", "error")
         return redirect(url_for('prestito'))
     
     cursor = mysql.connection.cursor()
@@ -208,7 +209,7 @@ def prestito(titolo, dataFine):
 
     username = session.get('user_id')
     if 'user_id' not in session:
-        flash("Devi effettuare il login per richiedere un prestito")
+        flash("Devi effettuare il login per richiedere un prestito", "error")
         return redirect(url_for('login'))
     
     if len(libro) > 0:
@@ -220,10 +221,10 @@ def prestito(titolo, dataFine):
         mysql.connection.commit()
         cursor.close()
 
-        flash("Prestito inserito correttamente")
+        flash("Prestito inserito correttamente", "success")
         return redirect(url_for('session'))
     
-    flash("Libro non disponibile")
+    flash("Libro non disponibile", "error")
     return redirect(url_for('session'))
 
 def restituisci(titolo):
@@ -240,16 +241,18 @@ def restituisci(titolo):
     risultato = cursor.fetchall()
     cursor.close()
 
+    data = datetime.now().strftime('%Y-%m-%d ')
+    username = session.get('user_id')
     if len(risultato) > 0:
         cursor = mysql.connection.cursor()
         query = "UPDATE Prestiti SET dataRestituzione = %s WHERE username = %s and isbn = %s"
-        cursor.execute(query, (datetime.now().strftime('%Y-%m-%d '), session.get('user_id'), isbn))
+        cursor.execute(query, (data, username, isbn))
         mysql.connection.commit()
         cursor.close()
 
-        flash("Libro restituito con successo")
+        flash("Libro restituito con successo", "success")
         return redirect(url_for('session'))
 
-    flash("Prestito non trovato")
+    flash("Prestito non trovato", "error")
     return redirect(url_for('restituisci'))
     

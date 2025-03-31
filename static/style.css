@@ -251,23 +251,17 @@ li a:hover {
     text-align: center;
     font-size: 1.1em;
     font-weight: 500;
-    box-shadow: var(--shadow-sm);
 }
 /* Stili diversi per tipi di messaggio (se passi categorie nel flash) */
 .flash-success { /* Usa flash('Messaggio', 'success') */
     color: #155724;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
+    background-color: white;
 }
 .flash-error { /* Usa flash('Messaggio', 'error') */
     color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
 }
 .flash-info { /* Usa flash('Messaggio', 'info') */
     color: #0c5460;
-    background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
 }
 
 /* (Opzionale) Stili base per Modal se non usi Bootstrap CSS completo */

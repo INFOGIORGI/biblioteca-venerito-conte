@@ -23,13 +23,16 @@
     <p>{% block corpo %}{% endblock %}</p>
   </div>
   
-  {% with messages = get_flashed_messages() %}
+  <div class="flash-message flash-{{ category | default('info') }}">
+    {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
             <h1 class="flash-message">{{message}}</h1>
         {%endfor%}
     {% endif %}
-{% endwith %}
+  {% endwith %}
+  </div>
+  
 </body>
 
 
