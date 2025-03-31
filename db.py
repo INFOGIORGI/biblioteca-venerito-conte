@@ -225,4 +225,31 @@ def prestito(titolo, dataFine):
     
     flash("Libro non disponibile")
     return redirect(url_for('session'))
+
+def restituisci(titolo):
+    cursor = mysql.connection.cursor()
+    query = "SELECT isbn FROM Libri WHERE titolo = %s"
+    cursor.execute(query, (titolo,))
+    isbn = cursor.fetchone()
+    cursor.close()
+
+
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM Prestiti WHERE username=%s and isbn = %s"
+    cursor.execute(query, (session.get('user_id'),isbn))
+    risultato = cursor.fetchall()
+    cursor.close()
+
+    if len(risultato) > 0:
+        cursor = mysql.connection.cursor()
+        query = "UPDATE Prestiti SET dataRestituzione = %s WHERE username = %s and isbn = %s"
+        cursor.execute(query, (datetime.now().strftime('%Y-%m-%d '), session.get('user_id'), isbn))
+        mysql.connection.commit()
+        cursor.close()
+
+        flash("Libro restituito con successo")
+        return redirect(url_for('session'))
+
+    flash("Prestito non trovato")
+    return redirect(url_for('restituisci'))
     

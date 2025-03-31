@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+
+{%block nav%}
+<a href="{{url_for('logout')}}">Logout</a>
+<a href="{{url_for('prestito')}}">Richiedi un prestito</a>
+{%endblock%}
+
+{%block corpo%}
+<form action="/restituisci/" method="post">
+    <label for="titolo">Inserisci il titolo</label>
+    <input type="text" id="titolo" name="titolo">
+    <br><br>
+    <input type="submit" value="Restituisci">
+</form>
+
+
+{% endblock %}

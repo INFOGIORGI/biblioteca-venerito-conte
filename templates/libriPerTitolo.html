@@ -3,16 +3,19 @@
 Lista dei Libri
 {%endblock%}
 
-
+{%block nav%}
+<a href="{{url_for('register')}}" class="nav-button">Registrati</a>
+{%endblock%}
 
 {%block corpo%}
 
-<form action="/ordinaPerAutore/">
-    <input type="submit" value="Ordina per Autore">
-</form>
-<br>
-<form action="/ordinaPerTitolo/">
-    <input type="submit" value="Ordina per Titolo">
+<div class="sort-options">
+    <a href="{{ url_for('lista', ordine='titolo') }}">Ordina per titolo</a>
+    <a href="{{ url_for('lista', ordine='autore') }}">Ordina per autore</a>
+</div>
+
+<form action="/statisticheGenere/" method= "post">
+    <input type="submit" value="Ottieni le statistiche per la ricerca di genere">
 </form>
 
 

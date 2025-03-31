@@ -120,4 +120,13 @@ def session():
 @app.route("/sessionAdmin/")
 def sessionAdmin():
     return render_template("sessionAdmin.html", titolo="gestione biblioteca")
+
+@app.route("/restituisci/", methods = ["GET", "POST"])
+def restituisci():
+    if request.method == "GET":
+        return render_template("restituisci.html", titolo="Restituisci un titolo")
+    titolo = request.form.get("titolo")
+    return db.restituisci(titolo)
+
+
 app.run(debug=True)

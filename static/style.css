@@ -1,73 +1,128 @@
-/* style.css - Stile Minimalista per Biblioteca */
+/* style.css - Stile "Carino" per Biblioteca */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600&display=swap');
+
+/* Variabili CSS per una gestione facile dei colori e font */
+:root {
+    --primary-color: #2a9d8f; /* Un bel verde acqua / teal */
+    --primary-dark: #26837b;
+    --secondary-color: #e76f51; /* Un colore accento caldo (opzionale) */
+    --light-bg: #f8f9fa;
+    --content-bg: #ffffff;
+    --text-color: #343a40; /* Grigio scuro quasi nero */
+    --muted-color: #6c757d; /* Grigio più chiaro per testo secondario */
+    --border-color: #dee2e6;
+    --link-color: var(--primary-color);
+    --link-hover: var(--primary-dark);
+    --button-text: #ffffff;
+    --heading-font: 'Poppins', sans-serif;
+    --body-font: 'Lato', sans-serif;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
 /* Reset e Impostazioni Generali del Corpo */
 body {
-    font-family: sans-serif; /* Un font di base leggibile */
-    line-height: 1.6;
+    font-family: var(--body-font);
+    line-height: 1.7; /* Aumenta leggibilità */
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9; /* Sfondo leggermente grigio */
-    color: #333; /* Colore testo scuro */
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    font-size: 16px; /* Dimensione base */
 }
 
 /* Contenitore Principale */
 .container {
-    max-width: 960px; /* Limita la larghezza su schermi grandi */
-    margin: 20px auto; /* Centra il contenitore con margine sopra/sotto */
-    padding: 20px;
-    background-color: #fff; /* Sfondo bianco per l'area contenuti */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombra leggera */
+    max-width: 1140px; /* Contenitore leggermente più largo */
+    margin: 30px auto; /* Più margine sopra/sotto */
+    padding: 35px 40px; /* Più padding interno */
+    background-color: var(--content-bg);
+    border-radius: var(--border-radius-md); /* Angoli più arrotondati */
+    box-shadow: var(--shadow-md); /* Ombra più definita ma morbida */
 }
 
-/* Barra di Navigazione */
-.navbar {
-    background-color: #eee; /* Sfondo grigio chiaro per la navbar */
-    padding: 10px 0;
-    text-align: center; /* Centra i link */
-    margin-bottom: 30px; /* Spazio sotto la navbar */
-    border-bottom: 1px solid #ddd;
+/* Navigazione a Pulsanti Migliorata */
+.button-navigation {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.navbar a {
-    text-decoration: none; /* Rimuove la sottolineatura */
-    color: #333; /* Colore link scuro */
-    margin: 0 15px; /* Spaziatura tra i link */
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.2s ease; /* Transizione per hover */
+.nav-button {
+    display: inline-block;
+    background: linear-gradient(to bottom, var(--primary-color), var(--primary-dark)); /* Gradiente leggero */
+    color: var(--button-text);
+    padding: 12px 28px; /* Padding generoso */
+    margin: 5px 10px;
+    text-decoration: none;
+    border: none;
+    border-radius: 50px; /* Pulsanti a "pillola" */
+    font-family: var(--heading-font);
+    font-weight: 500;
+    font-size: 0.9em;
+    letter-spacing: 0.5px; /* Leggera spaziatura tra lettere */
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-sm);
 }
 
-.navbar a:hover {
-    background-color: #ddd; /* Sfondo leggermente più scuro al passaggio del mouse */
-    color: #000;
+.nav-button:hover {
+    background: linear-gradient(to bottom, var(--primary-dark), #216d64); /* Gradiente più scuro su hover */
+    transform: translateY(-3px); /* Effetto sollevamento più pronunciato */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:active {
+    transform: translateY(0px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); /* Ombra interna al click */
 }
 
 /* Intestazioni */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+    color: var(--primary-dark); /* Colore primario scuro per le intestazioni */
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-weight: 600;
+}
+
 h1 {
-    color: #444;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee; /* Sottolineatura leggera */
+    font-size: 2.2em;
+    border-bottom: 2px solid var(--primary-color); /* Sottolineatura più spessa e colorata */
     padding-bottom: 10px;
+    margin-bottom: 1em;
 }
 
-/* Paragrafi */
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.5em; }
+
+/* Paragrafi e Testo */
 p {
-    margin-bottom: 15px;
+    margin-bottom: 1.2em;
+    color: var(--text-color);
 }
 
-/* Form */
+/* Form più curati */
 form {
-    margin-bottom: 20px; /* Spazio sotto i form */
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    background-color: #fdfdfd;
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: #fff; /* Sfondo bianco pulito */
+    box-shadow: var(--shadow-sm);
 }
 
 form label {
-    display: block; /* Mette le etichette sopra gli input */
-    margin-bottom: 5px;
-    font-weight: bold;
+    display: block;
+    margin-bottom: 8px; /* Più spazio */
+    font-weight: 700; /* Font Lato bold */
+    color: var(--text-color);
+    font-size: 0.95em;
 }
 
 form input[type="text"],
@@ -75,114 +130,178 @@ form input[type="password"],
 form input[type="email"],
 form input[type="number"],
 form input[type="date"] {
-    width: 95%; /* Larghezza quasi piena, lascia spazio per il padding */
-    padding: 10px;
-    margin-bottom: 15px; /* Spazio sotto ogni input */
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    box-sizing: border-box; /* Include padding/border nella larghezza */
+    width: 100%; /* Occupa tutta la larghezza disponibile */
+    padding: 12px 15px; /* Padding interno */
+    margin-bottom: 20px; /* Più spazio sotto */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    box-sizing: border-box;
+    font-family: var(--body-font);
+    font-size: 1em;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-form input[type="submit"],
-button { /* Stile base per bottoni e submit */
-    background-color: #007bff; /* Blu standard */
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2); /* Focus ring più visibile */
+}
+
+/* Pulsanti dentro i form */
+form input[type="submit"], form button.form-button { /* Aggiungi classe .form-button se usi <button> */
+    background-color: var(--secondary-color); /* Usa colore secondario per differenziare */
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 3px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
     font-size: 1em;
-    transition: background-color 0.2s ease;
+    font-family: var(--heading-font);
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 10px; /* Spazio sopra il pulsante */
 }
 
-form input[type="submit"]:hover,
-button:hover {
-    background-color: #0056b3; /* Blu più scuro al passaggio del mouse */
+form input[type="submit"]:hover, form button.form-button:hover {
+    background-color: #d95f3f; /* Colore secondario più scuro */
+    transform: translateY(-1px);
 }
 
-/* Tabelle */
+/* Tabelle più eleganti */
 table {
-    width: 100%; /* Tabella a larghezza piena */
-    border-collapse: collapse; /* Unisce i bordi delle celle */
-    margin: 25px 0; /* Spazio sopra/sotto la tabella */
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--border-radius-md); /* Arrotonda angoli tabella */
+    overflow: hidden; /* Necessario per applicare border-radius alle celle interne */
 }
 
 th, td {
-    border: 1px solid #ddd; /* Bordo grigio chiaro per celle */
-    padding: 10px; /* Spaziatura interna delle celle */
-    text-align: left; /* Allineamento testo a sinistra */
+    padding: 15px; /* Più padding */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color); /* Solo bordi orizzontali */
 }
 
 th {
-    background-color: #f2f2f2; /* Sfondo leggermente grigio per le intestazioni */
-    font-weight: bold;
+    background-color: var(--primary-dark); /* Intestazione scura */
+    color: var(--button-text);
+    font-family: var(--heading-font);
+    font-weight: 600;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Stile per le righe alternate (opzionale, migliora leggibilità) */
+/* Stile per righe alternate più evidente */
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: var(--light-bg);
 }
 
-/* Liste (per la pagina Utenti) */
+/* Effetto hover sulle righe della tabella */
+tr:hover {
+    background-color: #e9ecef; /* Grigio chiaro su hover */
+}
+
+td a { /* Link all'interno delle tabelle */
+   color: var(--link-color);
+   font-weight: bold;
+   text-decoration: none;
+}
+td a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+
+/* Liste (per Utenti) */
 ul {
-    list-style: disc; /* Stile di default per i punti elenco */
-    padding-left: 20px; /* Indentazione */
+    list-style: none; /* Rimuove i punti elenco di default */
+    padding-left: 0;
 }
 
 li {
-    margin-bottom: 8px; /* Spazio tra gli elementi della lista */
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-left: 4px solid var(--primary-color); /* Barra laterale colorata */
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
+}
+li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+}
+li a:hover {
+    color: var(--primary-color);
 }
 
-/* Messaggi Flash (spesso mostrati come h1 nei tuoi template) */
-/* Puoi aggiungere uno stile specifico se necessario, es: */
-/*
+/* Stile per Messaggi Flash */
+/* IMPORTANTE: nel template, aggiungi la classe 'flash-message' all'elemento che contiene il messaggio */
+/* Esempio: {% for message in messages %} <h1 class="flash-message">{{message}}</h1> {% endfor %} */
 .flash-message {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
 }
-*/
+/* Stili diversi per tipi di messaggio (se passi categorie nel flash) */
+.flash-success { /* Usa flash('Messaggio', 'success') */
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+.flash-error { /* Usa flash('Messaggio', 'error') */
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+.flash-info { /* Usa flash('Messaggio', 'info') */
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+}
 
-/* Stile base per i modal di Bootstrap se li usi senza il CSS completo di BS */
-/* Nota: questo è molto minimale e potrebbe non funzionare perfettamente senza JS e CSS completo di Bootstrap */
-.modal {
-    /* Stili di base se NON usi il file CSS di Bootstrap */
-    display: none; /* Nascosto di default */
-    position: fixed;
-    z-index: 1050;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+/* (Opzionale) Stili base per Modal se non usi Bootstrap CSS completo */
+/* Potrebbero necessitare di aggiustamenti */
+.modal { display: none; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+.modal-content { background-color: #fefefe; margin: 10% auto; padding: 0; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: var(--border-radius-md); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.modal-header { padding: 15px 20px; border-bottom: 1px solid var(--border-color); background-color: var(--primary-color); color: white; border-top-left-radius: var(--border-radius-md); border-top-right-radius: var(--border-radius-md); }
+.modal-header h5 { margin: 0; font-family: var(--heading-font); font-size: 1.5em; }
+.modal-body { padding: 20px; }
+.modal-footer { padding: 15px 20px; border-top: 1px solid var(--border-color); text-align: right; }
+.btn-close { float: right; font-size: 1.5rem; font-weight: 700; line-height: 1; color: #fff; text-shadow: 0 1px 0 #000; opacity: .7; background: transparent; border: 0; cursor: pointer; padding: 0; margin-top: -2px;}
+.btn-close:hover { opacity: 1; }
+
+.sort-options {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente i bottoni */
+    margin: 20px 0;
 }
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
+
+.sort-options a {
+    text-decoration: none;
+    background-color: #008CBA; /* Colore di sfondo per i bottoni di ordinamento */
+    color: white;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
-.modal-header {
-    padding: 10px 16px;
-    border-bottom: 1px solid #eee;
+
+.sort-options a:hover {
+    background-color: #0077A8;
 }
-.modal-body { padding: 10px 16px; }
-.btn-close { /* Stile base per il bottone di chiusura */
-    float: right;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
-    color: #000;
-    text-shadow: 0 1px 0 #fff;
-    opacity: .5;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
+
+.genre-search {
+    text-align: center; /* Centra il testo e gli elementi inline */
+    margin: 20px 0;
 }

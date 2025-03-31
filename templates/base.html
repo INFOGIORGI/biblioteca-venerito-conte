@@ -8,21 +8,29 @@
   {% endblock %}
 </head>
 <body>
-
   <div class="container">
+  <h1>{% block intestazione %}{% endblock %}</h1>
+  <p>Scegli cosa vuoi fare</p>
+  
     <nav class="navbar">
-      <a href="{{url_for('home')}}">HOME</a>
-      <a href="{{url_for('ricerca')}}">Cerca un Libro</a>
-      <a href="{{url_for('lista')}}">Tutti i libri</a>
-      <a href="{{url_for('login')}}">Login</a>
-      <a href="{{url_for('register')}}">Registrati</a>
+      <a href="{{url_for('home')}}" class="nav-button">HOME</a>
+      <a href="{{url_for('ricerca')}}" class="nav-button">Cerca un Libro</a>
+      <a href="{{url_for('lista')}}" class="nav-button">Tutti i libri</a>
+      <a href="{{url_for('login')}}" class="nav-button">Login</a>
       {%block nav%}{%endblock%}
     </nav>
     
-    <h1>{% block intestazione %}{% endblock %}</h1>
+    
     <p>{% block corpo %}{% endblock %}</p>
   </div>
   
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h1 class="flash-message">{{message}}</h1>
+        {%endfor%}
+    {% endif %}
+{% endwith %}
 </body>
 
 

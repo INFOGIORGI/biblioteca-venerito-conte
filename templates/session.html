@@ -4,8 +4,9 @@ Profilo
 {% endblock %}
 
 {%block nav%}
-<a href="{{url_for('logout')}}">Logout</a>
-<a href="{{url_for('prestito')}}">Richiedi un prestito</a>
+<a href="{{url_for('logout')}}" class="nav-button">Logout</a>
+<a href="{{url_for('prestito')}}" class="nav-button">Richiedi un prestito</a>
+<a href="{{url_for('restituisci')}}" class="nav-button">Restituisci un libro anticipatamente</a>
 {%endblock%}
 
 {% block intestazione %}Il tuo profilo{% endblock %}

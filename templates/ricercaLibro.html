@@ -3,7 +3,9 @@
 Ricerca Libro per parola Chiave
 {% endblock %}
 
-
+{%block nav%}
+<a href="{{url_for('register')}}" class="nav-button">Registrati</a>
+{%endblock%}
 
 {% block corpo %}
 <form action="/ricercaLibro/" method="post">
@@ -14,11 +16,5 @@ Ricerca Libro per parola Chiave
     <input type="submit" value="Cerca">
 </form>
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-            <h1>{{message}}</h1>
-        {%endfor%}
-    {% endif %}
-{% endwith %}
+
 {%endblock%}

@@ -12,12 +12,5 @@
     <input type="submit" value="REGISTRATI">
 </form>
 
-{%with message=get_flashed_messages()%} 
-{%if message%}
-{%for i in message%}
-<h1>{{i}}</h1>
-{%endfor%}
-{%endif%}
-{%endwith%}
 
 {%endblock%}
