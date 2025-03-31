@@ -1,6 +1,9 @@
 {%extends 'base.html'%}
 {% block intestazione %}Aggiungi un libro{% endblock %}
 
+{%block nav%}
+<a href="{{url_for('logout')}}" class="nav-button">Logout</a>
+{%endblock%}
 {%block corpo%}
 <form action="/addLibro/" method="POST">
     <br>

@@ -1,6 +1,10 @@
 {%extends 'base.html'%}
 {% block intestazione %}Richiedi un Libro{% endblock %}
 
+{%block nav%}
+<a href="{{url_for('logout')}}" class="nav-button">Logout</a>
+{%endblock%}
+
 {%block corpo%}
 <form action="/prestito/" method="post">
     <label for="titolo">Titolo</label>
