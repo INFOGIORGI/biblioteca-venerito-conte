@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>{{titolo}}</title>
-  {% block stile %}{% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {% block stile %}
+  {% endblock %}
 </head>
 <body>
 
