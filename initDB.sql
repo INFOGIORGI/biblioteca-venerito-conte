@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS Prestiti;
+DROP TABLE IF EXISTS Prestiti; 
 DROP TABLE IF EXISTS Utenti;
-DROP TABLE IF EXISTS LibriPerAutore;
 DROP TABLE IF EXISTS Libri;
 DROP TABLE IF EXISTS Autori;
 DROP TABLE IF EXISTS RicercheCategoria;
@@ -26,14 +25,6 @@ CREATE TABLE IF NOT EXISTS Libri(
     anno INT,
     copie INT DEFAULT 1,
     riassunto VARCHAR(100),
-    FOREIGN KEY (codA) REFERENCES Autori(codA)
-);
-
-CREATE TABLE IF NOT EXISTS LibriPerAutore(
-    isbn CHAR(13),
-    codA VARCHAR(20),
-    PRIMARY KEY (isbn, codA),
-    FOREIGN KEY (isbn) REFERENCES Libri(isbn),
     FOREIGN KEY (codA) REFERENCES Autori(codA)
 );
 
