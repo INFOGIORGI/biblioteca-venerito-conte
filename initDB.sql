@@ -71,16 +71,3 @@ VALUES
     ('9788806230628', 'Narrativa', 'Mrs. Dalloway', 'A008', 1925, 9, 'Un romanzo sulla vita interiore di una donna nell’arco di una sola giornata.'),
     ('9788806230635', 'Romanzo', 'Il vecchio e il mare', 'A009', 1952, 6, 'La lotta di un vecchio pescatore cubano contro un enorme marlin.'),
     ('9788806230642', 'Narrativa', 'La Metamorfosi', 'A010', 1915, 11, 'La storia surreale di Gregor Samsa, che si sveglia trasformato in un insetto.');
-
-INSERT INTO LibriPerAutore (isbn, codA)
-VALUES
-    ('9788806200501', 'A001'),
-    ('9788806220531', 'A002'),
-    ('9788806240423', 'A003'),
-    ('9788806200518', 'A004'),
-    ('9788806200525', 'A005'),
-    ('9788806230604', 'A006'),
-    ('9788806230611', 'A007'),
-    ('9788806230628', 'A008'),
-    ('9788806230635', 'A009'),
-    ('9788806230642', 'A010');
